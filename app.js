@@ -67,7 +67,22 @@ MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (e
       res.json(data); 
     });
   });
-
+  app.post('/', (req, res) => {
+    // Fetch data from MongoDB collection
+    collection.find().toArray((findErr, data) => {
+      if (findErr) {
+        console.error('Error retrieving data from MongoDB:', findErr);
+        res.status(500).send('Internal Server Error');
+        return;
+      }
+  
+      // Render the data as JSON on a web page
+      const jsonData = JSON.stringify(data, null, 2);
+      const html = `<pre>${jsonData}</pre>`;
+      res.send(html);
+    });
+  });
+  
   app.get('/Skill', (req, res) => {
     // Fetch data from MongoDB collection
     const collection = db.collection('Skill'); // Replace with your collection name
