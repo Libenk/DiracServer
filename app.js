@@ -100,7 +100,8 @@ MongoClient.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (e
 
 
   console.log(collection.listIndexes());
-  const port= 3001;
+  const port = process.env.PORT || 3001;
+
   // Start the server
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
